@@ -10318,10 +10318,11 @@ sub main {
                   $tbl->{nibble_time}, # is this amount of time
                );
 
-               # Enforce minimum chunk size
-               $tbl->{chunk_size} = ($tbl->{chunk_size} < $min_chunk_size)
-                                  ? $min_chunk_size
-                                  : $tbl->{chunk_size};
+               # Enforce minimum chunk size. If the value is lower than the specified min, update
+               # the chunk size value accordingly.
+               if ($tbl->{chunk_size} < $min_chunk_size) {
+                  $tbl->{chunk_size} = $min_chunk_size;
+               }
 
                if ( $tbl->{chunk_size} < 1 ) {
                   # This shouldn't happen.  WeightedAvgRate::update() may
